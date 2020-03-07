@@ -5,7 +5,7 @@ import os
 # read language specification
 f = open('lang_spec.md')
 f.readline() # Ignore version 
-f.readline() # ignore header
+f.readline() # Ignore table header
 f.readline() # Ignore table format line
 lang_spec = []
 for line in f.readlines():
@@ -25,7 +25,7 @@ for spec in lang_spec:
         lang[spec[0]]['indent'] = -1
     else:
         lang[spec[0]]['indent'] = 0
-    lang[spec[0]]['C'] = spec[2].replace('\\n', '\n')
+    lang[spec[0]]['C'] = spec[3].replace('\\n', '\n')
 
 # Read source code
 f = open('test.H2H')
@@ -58,5 +58,4 @@ f.write(C)
 f.close()
 
 # Compile C code
-# os.system('g++ -O3 H2H.c')
-os.system('g++ -Wall H2H.c')
+os.system('g++ -Wall -O3 H2H.c')
