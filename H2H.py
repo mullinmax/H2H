@@ -46,4 +46,4 @@ f.write(C)
 f.close()
 
 # Compile C code
-os.system('g++ H2H.c')
+os.system('g++ -O3 H2H.c')
