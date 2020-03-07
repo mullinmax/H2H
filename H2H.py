@@ -5,6 +5,7 @@ import os
 # read language specification
 f = open('lang_spec.md')
 f.readline() # Ignore version 
+f.readline() # Ignore blank spacer line
 f.readline() # Ignore table header
 f.readline() # Ignore table format line
 lang_spec = []

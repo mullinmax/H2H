@@ -1,8 +1,9 @@
 language version: *0.1.0*
+
 symbol | indent | description      | C code
 -------|--------|------------------|---------------------
-`BOF`  | `+`    | Begining of code | `#include <cstdio>\nchar a[30000] = {0};\nchar *ptr[10]={a, a, a, a, a, a, a, a, a, a};\nint main(){`
-`EOF`  | `-`    | End of code      | `    return(0);\n}`
+`BOF`  | `+`    | beginning of code | `#include <cstdio>\nchar a[30000] = {0};\nchar *ptr[10]={a, a, a, a, a, a, a, a, a, a};\nint main(){`
+`EOF`  | `-`    | end of code      | `    return(0);\n}`
 `"`    | `=`    | print            | `putchar(*$);`
 `?`    | `=`    | read             | `*$=getchar();`
 `[`    | `+`    | loop while > 0   | `while ($) {`
