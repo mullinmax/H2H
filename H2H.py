@@ -4,8 +4,9 @@ import os
 
 # read language specification
 f = open('lang_spec.md')
-f.readline()
-f.readline()
+f.readline() # Ignore version 
+f.readline() # ignore header
+f.readline() # Ignore table format line
 lang_spec = []
 for line in f.readlines():
     row = []
@@ -28,17 +29,28 @@ for spec in lang_spec:
 
 # Read source code
 f = open('test.H2H')
-code = ''.join(f.readlines())
+source_code = ''.join(f.readlines())
 f.close()
 
 # Build C code
-C = lang['^']['C'] + '\n'
-indent = lang['^']['indent']
-for char in code:
-    if char in lang:
-        C += '\t'*indent + lang[char]['C'] + '\n'
-        indent += lang[char]['indent']
-C += lang['$']['C']
+def build_C_code(src, ind):
+    if len(src) == 0:
+        return ''
+    if src[0] in lang:
+        code = '$'
+        while '$' in code:
+            code = code.replace('$', lang[src[0]]['C'], 1)
+            ind += lang[src[0]]['indent']
+            src = src[1:]
+        return '    '*indent + code + '\n' + build_C_code(src, ind)
+    else:
+        return build_C_code(src[1:], ind)
+        
+
+C = lang['BOF']['C'] + '\n'
+indent = lang['BOF']['indent']
+C += build_C_code(source_code, indent)
+C += lang['EOF']['C']
 
 # Write C code
 f = open('H2H.c', 'w')
@@ -46,4 +58,5 @@ f.write(C)
 f.close()
 
 # Compile C code
-os.system('g++ -O3 H2H.c')
+# os.system('g++ -O3 H2H.c')
+os.system('g++ -Wall H2H.c')
