@@ -1,6 +1,7 @@
 #!/bin/python
 
 import os
+from string import Template
 
 # read language specification
 f = open('lang_spec.md')
@@ -43,15 +44,13 @@ def build_C_code(src, ind):
             code = code.replace('$', lang[src[0]]['C'], 1)
             ind += lang[src[0]]['indent']
             src = src[1:]
-        return '    '*indent + code + '\n' + build_C_code(src, ind)
+        return '    '*ind + code + '\n' + build_C_code(src, ind)
     else:
         return build_C_code(src[1:], ind)
         
-
-C = lang['BOF']['C'] + '\n'
-indent = lang['BOF']['indent']
-C += build_C_code(source_code, indent)
-C += lang['EOF']['C']
+fin = open('templates/main.cpp')
+template = Template(fin.read())
+C = template.substitute({"program":build_C_code(source_code, 1)})
 
 # Write C code
 f = open('H2H.c', 'w')
