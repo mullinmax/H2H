@@ -33,4 +33,4 @@ symbol | indent | description      | C code
  `8`   | `=`    | head 8           | `ptr[8]`            
  `9`   | `=`    | head 9           | `ptr[9]`            
  `.`   | `=`    | origin           | `a`                 
- `\`   | `=`    | new line         | `\n`                
+ `\n`  | `=`    | new line         | `\n`                
