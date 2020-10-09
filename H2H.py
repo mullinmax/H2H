@@ -48,7 +48,7 @@ def build_C_code(src, ind):
     else:
         return build_C_code(src[1:], ind)
         
-fin = open('templates/main.cpp')
+fin = open('templates/main.H2H')
 template = Template(fin.read())
 C = template.substitute({"program":build_C_code(source_code, 1)})
 
