@@ -1,4 +1,5 @@
 *.out
 *.c
 *.cpp
+*.exe
 .vscode/*

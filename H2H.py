@@ -1,4 +1,5 @@
-import json 
+import json
+import os
 
 class H2H():
 
@@ -63,4 +64,11 @@ symbol | indent | description      | C code
 
 if __name__ == "__main__":
     compiler = H2H('lang_spec.json')
-    print(compiler.H2H_to_C('?1\n"1'))
+    C = compiler.H2H_to_C('?1\n"1')
+    
+    f = open('temp.c', 'w')
+    f.write(C)
+
+    os.system('gcc -Wall -O3 temp.c')
+
+    
