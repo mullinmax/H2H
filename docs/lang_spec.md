@@ -34,6 +34,3 @@ symbol | indent | description      | C code
  `9`   | `=`    | head 9           | `ptr[9]`            
  `.`   | `=`    | origin           | `a`                 
  `\n`  | `=`    | new line         | `\n`                
-
- 10101110
- 01010001

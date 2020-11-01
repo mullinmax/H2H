@@ -75,10 +75,10 @@ symbol | indent | description      | C code
         with open('temp_output.txt') as output_file:
             output = output_file.read()
 
-        #if os.path.exists('temp_input.txt'):
-            #os.remove('temp_input.txt')
-        #if os.path.exists('temp_output.txt'):
-            #os.remove('temp_output.txt')
+        if os.path.exists('temp_input.txt'):
+            os.remove('temp_input.txt')
+        if os.path.exists('temp_output.txt'):
+            os.remove('temp_output.txt')
         return output
 
 
@@ -96,17 +96,27 @@ if __name__ == "__main__":
         compiler.compile(tests[t]['H2H'], 'temp.out')
         
         # Run C code against each IO combination
-        results[t] = []
+        tests[t]['RESULTS'] = []
         for io in tests[t]['IO']:
             O = compiler.run(io[0], 'temp.out')
-            if io[1] == O:
-                print(O)
-                results[t].append(True)
+            tests[t]['RESULTS'].append((io[1], O))
+
+        if os.path.exists('temp.out'):
+           os.remove('temp.out')
+
+
+    PASS = '\033[92mPASS\t'
+    FAIL = '\033[91mFAIL\t'
+    ENDC = '\033[0m'
+
+
+    for t in tests:
+        print(t+':')
+        for v in tests[t]['RESULTS']:
+            if v[0] == v[1]:
+                print('\t' + PASS + v[0])
             else:
-                results[t].append(False)
-                print(O)
-        #if os.path.exists('temp.out'):
-         #   os.remove('temp.out')
-    print(results)
+                print('\t' + FAIL + 'FOUND: "' + v[1] + '" EXPECTED: "' + v[0] + '"')
+        print(ENDC)
 
         # delete files
