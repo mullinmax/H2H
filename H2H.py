@@ -81,44 +81,55 @@ symbol | indent | description      | C code
             os.remove('temp_output.txt')
         return output
 
+    def test(self, path = None):
+        import time
+        tic = time.perf_counter()
 
+        with open('tests.json') as json_file:
+            tests = json.load(json_file)
+        
+        results = {}
+        for t in tests:
+            # Genorate C code
+            self.compile(tests[t]['H2H'], 'temp.out')
+            
+            # Run C code against each IO combination
+            tests[t]['RESULTS'] = []
+            for io in tests[t]['IO']:
+                O = self.run(io[0], 'temp.out')
+                tests[t]['RESULTS'].append((io[1], O))
+
+            if os.path.exists('temp.out'):
+                os.remove('temp.out')
+
+      
+        PASS = '✔️\t'
+        FAIL = '❌\t'
+        ENDC = ''
+
+        output_str = []
+        for t in tests:
+            output_str.append(t+':')
+            for v in tests[t]['RESULTS']:
+                if v[0] == v[1]:
+                    output_str.append('\t' + PASS + v[0])
+                else:
+                    output_str.append('\t' + FAIL + 'FOUND: "' + v[1] + '" EXPECTED: "' + v[0] + '"')
+            output_str.append(ENDC)
+
+        if os.path.exists('temp.out'):
+                os.remove('temp.out')
+        toc = time.perf_counter()
+        output_str.append("TESTS COMPLETED IN {s} SECONDS".format(s = toc - tic))
+
+        if path is None:
+            print('\n'.join(output_str))
+        else:
+            with open(path, 'w') as output_file:
+                output_file.write('\n'.join(output_str))
 
 if __name__ == "__main__":
     
     compiler = H2H('lang_spec.json')
     
-    with open('tests.json') as json_file:
-        tests = json.load(json_file)
-    
-    results = {}
-    for t in tests:
-        # Genorate C code
-        compiler.compile(tests[t]['H2H'], 'temp.out')
-        
-        # Run C code against each IO combination
-        tests[t]['RESULTS'] = []
-        for io in tests[t]['IO']:
-            O = compiler.run(io[0], 'temp.out')
-            tests[t]['RESULTS'].append((io[1], O))
-
-        if os.path.exists('temp.out'):
-           os.remove('temp.out')
-
-
-    PASS = '\033[92mPASS\t'
-    FAIL = '\033[91mFAIL\t'
-    ENDC = '\033[0m'
-
-
-    for t in tests:
-        print(t+':')
-        for v in tests[t]['RESULTS']:
-            if v[0] == v[1]:
-                print('\t' + PASS + v[0])
-            else:
-                print('\t' + FAIL + 'FOUND: "' + v[1] + '" EXPECTED: "' + v[0] + '"')
-        print(ENDC)
-
-    if os.path.exists('temp.out'):
-            os.remove('temp.out')
-        # delete files
+    compiler.test()
