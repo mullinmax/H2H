@@ -1,9 +1,0 @@
-#include <stdio.h>
-
-char a[30000] = {0};
-char *ptr[10]={a, a, a, a, a, a, a, a, a, a};
-
-int main(){
-    $program
-    return(0);
-}

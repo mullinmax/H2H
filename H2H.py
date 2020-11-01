@@ -15,15 +15,14 @@ class H2H():
         f = open(output_path, 'w')
         output = '''version: *{version}*
 
-symbol | indent | description      | C code
--------|--------|------------------|---------------------
+symbol | description      | C code
+-------|------------------|---------------------
 '''.format(version = self.lang_spec['version'])
         
-        esc = lambda t : '`' + t.replace("|", "\|").replace("\n", "\\n") + '`'
+        esc = lambda t : '`' + t.replace("|", "\|").replace("\n", "\\n").replace("\t", "\\t") + '`'
         md_cols = lambda t : '|'.join(
             [
                 ' ' + esc(t['s']).ljust(6),
-                ' ' + esc(t['i']).ljust(7),
                 ' ' + t['d'].ljust(17),
                 ' ' + esc(t['c']).ljust(20)
             ]
@@ -35,23 +34,21 @@ symbol | indent | description      | C code
         return
 
     # Build C code
-    def H2H_to_C(self, H2H_code, ind = 1):
+    def H2H_to_C(self, H2H_code):
         symbols = {}
         for t in self.lang_spec['tokens']:
             symbols[t['s']] = t['c']
-        return self.lang_spec["main-template"].replace('$', self.__H2H_to_C(H2H_code, '', ind, symbols))
+        return self.lang_spec["main-template"].replace('$', self.__H2H_to_C(H2H_code, '', symbols))
 
-    def __H2H_to_C(self, H2H_code, C, ind, symbols):
+    def __H2H_to_C(self, H2H_code, C, symbols):
         if len(H2H_code) == 0:
             return C
         if H2H_code[0] in symbols:
             if '$' in C:
                 C = C.replace('$', symbols[H2H_code[0]], 1)
             else:
-                C += '    '*ind + symbols[H2H_code[0]]
-            return self.__H2H_to_C(H2H_code[1:], C, ind, symbols)
-        else:
-            return self.__H2H_to_C(H2H_code[1:], C, ind, symbols)
+                C += symbols[H2H_code[0]]
+        return self.__H2H_to_C(H2H_code[1:], C, symbols)
 
 
 
@@ -133,7 +130,10 @@ symbol | indent | description      | C code
                 output_file.write('\n\n'.join(output_str))
 
 if __name__ == "__main__":
-    
+    import sys
     compiler = H2H('lang_spec.json')
-    
-    compiler.test()
+
+    if len(sys.argv) > 1 and sys.argv[1] == "--verbose":    
+        compiler.test(verbose = True)
+    else:
+        compiler.test()

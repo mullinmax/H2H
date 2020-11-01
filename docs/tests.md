@@ -12,7 +12,11 @@ bitwise-or:✔️
 
 bitwise-xor:✔️
 
-bitwise-not:❌
+bitwise-not:✔️
+
+left-shift:✔️
+
+right-shift:✔️
 
 multiply:✔️
 
@@ -22,4 +26,8 @@ add:✔️
 
 subtract:✔️
 
-TESTS COMPLETED IN 1.8088966077193618 SECONDS
+tab:✔️✔️
+
+new-line:✔️✔️
+
+TESTS COMPLETED IN 2.6243595154955983 SECONDS
