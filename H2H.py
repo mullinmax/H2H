@@ -61,8 +61,8 @@ symbol | indent | description      | C code
             c_file.write(C)
         
         os.system('gcc -Wall -O3 temp.c -o {out}'.format(out = output_path))
-        #if os.path.exists('temp.c'):
-            #os.remove('temp.c')
+        if os.path.exists('temp.c'):
+            os.remove('temp.c')
         return
 
     def run(self, input_str, program_path):
@@ -119,4 +119,6 @@ if __name__ == "__main__":
                 print('\t' + FAIL + 'FOUND: "' + v[1] + '" EXPECTED: "' + v[0] + '"')
         print(ENDC)
 
+    if os.path.exists('temp.out'):
+            os.remove('temp.out')
         # delete files
