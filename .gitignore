@@ -3,3 +3,4 @@
 *.cpp
 *.exe
 .vscode/*
+__pycache__/*
