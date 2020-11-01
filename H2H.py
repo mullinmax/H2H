@@ -81,7 +81,7 @@ symbol | indent | description      | C code
             os.remove('temp_output.txt')
         return output
 
-    def test(self, path = None):
+    def test(self,verbose = False, path = None):
         import time
         tic = time.perf_counter()
 
@@ -103,19 +103,23 @@ symbol | indent | description      | C code
                 os.remove('temp.out')
 
       
-        PASS = '✔️\t'
-        FAIL = '❌\t'
-        ENDC = ''
+        PASS = '✔️'
+        FAIL = '❌'
 
         output_str = []
         for t in tests:
             output_str.append(t+':')
             for v in tests[t]['RESULTS']:
-                if v[0] == v[1]:
-                    output_str.append('\t' + PASS + v[0])
+                if verbose:
+                    if v[0] == v[1]:
+                        output_str.append('\t'+PASS+'\t' + v[0])
+                    else:
+                        output_str.append('\t'+FAIL+'\t' + 'FOUND: "' + v[1] + '" EXPECTED: "' + v[0] + '"')
                 else:
-                    output_str.append('\t' + FAIL + 'FOUND: "' + v[1] + '" EXPECTED: "' + v[0] + '"')
-            output_str.append(ENDC)
+                    if v[0] == v[1]:
+                        output_str[-1] += PASS
+                    else:
+                        output_str[-1] += FAIL
 
         if os.path.exists('temp.out'):
                 os.remove('temp.out')
