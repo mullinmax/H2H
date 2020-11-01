@@ -1,6 +1,5 @@
 import json
 import os
-from subprocess import PIPE, Popen
 
 class H2H():
 
@@ -67,15 +66,20 @@ symbol | indent | description      | C code
         return
 
     def run(self, input_str, program_path):
-        with open('temp.txt', 'w') as input_file:
+        with open('temp_input.txt', 'w') as input_file:
             input_file.write(input_str)
 
-        process = Popen(
-            args='cat temp.txt > ./{program}'.format(program = program_path),
-            stdout=PIPE,
-            shell=True
-        )
-        return process.communicate()[0].decode('utf-8')
+        os.system('cat temp_input.txt > ./{program} > temp_output.txt'.format(program = program_path))
+        
+        output = ''
+        with open('temp_output.txt') as output_file:
+            output = output_file.read()
+
+        if os.path.exists('temp_input.txt'):
+            os.remove('temp_input.txt')
+        if os.path.exists('temp_output.txt'):
+            os.remove('temp_output.txt')
+        return output
 
 
 
@@ -101,6 +105,6 @@ if __name__ == "__main__":
             else:
                 results[t].append(False)
                 print(O)
-
+    print(results)
 
         # delete files
