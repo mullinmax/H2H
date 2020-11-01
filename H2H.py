@@ -39,7 +39,6 @@ symbol | indent | description      | C code
         symbols = {}
         for t in self.lang_spec['tokens']:
             symbols[t['s']] = t['c']
-        print(symbols)
         return self.lang_spec["main-template"].replace('$', self.__H2H_to_C(H2H_code, '', ind, symbols))
 
     def __H2H_to_C(self, H2H_code, C, ind, symbols):
@@ -56,19 +55,70 @@ symbol | indent | description      | C code
 
 
 
-    def compile(self, input_path, output_path):
-        H2H_code = read(input_path)
-        H2H_to_C(H2H_code)
-        write(output_path)
-        return code
+    def compile(self, H2H_code, output_path):
+        C = self.H2H_to_C(H2H_code)
+        with open('temp.c', 'w') as c_file:
+            c_file.write(C)
+        
+        os.system('gcc -Wall -O3 temp.c -o {out}'.format(out = output_path))
+        if os.path.exists('temp.c'):
+            os.remove('temp.c')
+        return
+
+    def run(self, input_str, program_path):
+        with open('temp_input.txt', 'w') as input_file:
+            input_file.write(input_str)
+
+        os.system('cat temp_input.txt | ./{program} > temp_output.txt'.format(program = program_path))
+        
+        output = ''
+        with open('temp_output.txt') as output_file:
+            output = output_file.read()
+
+        if os.path.exists('temp_input.txt'):
+            os.remove('temp_input.txt')
+        if os.path.exists('temp_output.txt'):
+            os.remove('temp_output.txt')
+        return output
+
+
 
 if __name__ == "__main__":
+    
     compiler = H2H('lang_spec.json')
-    C = compiler.H2H_to_C('?1\n"1')
     
-    f = open('temp.c', 'w')
-    f.write(C)
-
-    os.system('gcc -Wall -O3 temp.c')
-
+    with open('tests.json') as json_file:
+        tests = json.load(json_file)
     
+    results = {}
+    for t in tests:
+        # Genorate C code
+        compiler.compile(tests[t]['H2H'], 'temp.out')
+        
+        # Run C code against each IO combination
+        tests[t]['RESULTS'] = []
+        for io in tests[t]['IO']:
+            O = compiler.run(io[0], 'temp.out')
+            tests[t]['RESULTS'].append((io[1], O))
+
+        if os.path.exists('temp.out'):
+           os.remove('temp.out')
+
+
+    PASS = '\033[92mPASS\t'
+    FAIL = '\033[91mFAIL\t'
+    ENDC = '\033[0m'
+
+
+    for t in tests:
+        print(t+':')
+        for v in tests[t]['RESULTS']:
+            if v[0] == v[1]:
+                print('\t' + PASS + v[0])
+            else:
+                print('\t' + FAIL + 'FOUND: "' + v[1] + '" EXPECTED: "' + v[0] + '"')
+        print(ENDC)
+
+    if os.path.exists('temp.out'):
+            os.remove('temp.out')
+        # delete files

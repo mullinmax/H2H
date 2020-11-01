@@ -12,7 +12,7 @@ symbol | indent | description      | C code
  `=`   | `=`    | set value        | ` = $`              
  `&`   | `=`    | bitwise and      | ` & $`              
  `\|`  | `=`    | bitwise or       | ` \| $`             
- `^`   | `=`    | XOR              | ` ^ $`              
+ `^`   | `=`    | bitwise xor      | ` ^ $`              
  `!`   | `=`    | bitwise not      | ` ~$`               
  `%`   | `=`    | modulous         | ` % $`              
  `*`   | `=`    | multiply         | ` * $`              
