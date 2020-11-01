@@ -13,7 +13,7 @@ class H2H():
 
     def lang_spec_to_md(self, output_path):
         f = open(output_path, 'w')
-        output = '''language version: *{version}*
+        output = '''version: *{version}*
 
 symbol | indent | description      | C code
 -------|--------|------------------|---------------------
