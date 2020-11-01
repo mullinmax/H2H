@@ -1,5 +1,6 @@
 import json
 import os
+from subprocess import PIPE, Popen
 
 class H2H():
 
@@ -55,24 +56,30 @@ symbol | indent | description      | C code
 
 
 
-    def compile(self, input_path, output_path):
-        H2H_code = read(input_path)
-        H2H_to_C(H2H_code)
-        write(output_path)
+    def compile(self, H2H_code, output_path):
+        C = self.H2H_to_C(H2H_code)
+        with open('temp.c', 'w') as c_file:
+            c_file.write(C)
+        
+        os.system('gcc -Wall -O3 temp.c -o {out}'.format(out = output_path))
+        if os.path.exists('temp.c'):
+            os.remove('temp.c')
         return
 
-    def run(self):
-        pass
+    def run(self, input_str, program_path):
+        with open('temp.txt', 'w') as input_file:
+            input_file.write(input_str)
 
-if __name__ == "__main__":
-    from subprocess import PIPE, Popen
-    def sys_call(command):
         process = Popen(
-            args=command,
+            args='cat temp.txt > ./{program}'.format(program = program_path),
             stdout=PIPE,
             shell=True
         )
         return process.communicate()[0].decode('utf-8')
+
+
+
+if __name__ == "__main__":
     
     compiler = H2H('lang_spec.json')
     
@@ -82,23 +89,13 @@ if __name__ == "__main__":
     results = {}
     for t in tests:
         # Genorate C code
-        C = compiler.H2H_to_C(tests[t]['H2H'])
+        compiler.compile(tests[t]['H2H'], 'temp.out')
         
-        # Write C code to file
-        f = open('temp.c', 'w')
-        f.write(C)
-        
-        # Compile C code
-        os.system('gcc -Wall -O3 temp.c')
-        # check for sucsessful compile
-
         # Run C code against each IO combination
         results[t] = []
         for io in tests[t]['IO']:
-            command = 'echo {I} > ./a.out'.format(I=io[0])
-            print('-' + command + '-')
-            O = sys_call(command)
-            if io[0] == O:
+            O = compiler.run(io[0], 'temp.out')
+            if io[1] == O:
                 print(O)
                 results[t].append(True)
             else:
