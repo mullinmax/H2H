@@ -130,7 +130,7 @@ symbol | indent | description      | C code
             print('\n'.join(output_str))
         else:
             with open(path, 'w') as output_file:
-                output_file.write('\n'.join(output_str))
+                output_file.write('\n\n'.join(output_str))
 
 if __name__ == "__main__":
     
