@@ -1,8 +1,8 @@
-version: *0.3.1*
+version: *0.4.0*
 
 symbol | description      | C code
 -------|------------------|---------------------
- `"`   | print            | `putchar(*$);`      
+ `!`   | print            | `putchar(*$);`      
  `?`   | read             | `*$=getchar();`     
  `[`   | loop while > 0   | `while ($) {`       
  `]`   | end loop         | `}`                 
@@ -13,7 +13,9 @@ symbol | description      | C code
  `&`   | bitwise and      | ` & $`              
  `\|`  | bitwise or       | ` \| $`             
  `^`   | bitwise xor      | ` ^ $`              
- `!`   | bitwise not      | ` ~$`               
+ `~`   | bitwise not      | ` ~$`               
+ `{`   | left shift       | ` << $`             
+ `}`   | right shift      | ` >> $`             
  `%`   | modulous         | ` % $`              
  `*`   | multiply         | ` * $`              
  `/`   | divide           | ` / $`              

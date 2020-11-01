@@ -1,9 +1,9 @@
 {
-    "version":"0.3.1",
+    "version":"0.4.0",
     "main-template":"#include <stdio.h>\nchar a[30000] = {0};\nchar *ptr[10]={a, a, a, a, a, a, a, a, a, a};\nint main(){\n$\n    return(0);\n}",
     "tokens":[
         {
-            "s":"\"",
+            "s":"!",
             "d":"print",
             "c":"putchar(*$);"
         },
@@ -58,9 +58,19 @@
             "c":" ^ $"
         },
         {
-            "s":"!",
+            "s":"~",
             "d":"bitwise not",
             "c":" ~$"
+        },
+        {
+            "s":"{",
+            "d":"left shift",
+            "c":" << $"
+        },
+        {
+            "s":"}",
+            "d":"right shift",
+            "c":" >> $"
         },
         {
             "s":"%",

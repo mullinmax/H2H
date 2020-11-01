@@ -48,9 +48,7 @@ symbol | description      | C code
                 C = C.replace('$', symbols[H2H_code[0]], 1)
             else:
                 C += symbols[H2H_code[0]]
-            return self.__H2H_to_C(H2H_code[1:], C, symbols)
-        else:
-            return self.__H2H_to_C(H2H_code[1:], C, symbols)
+        return self.__H2H_to_C(H2H_code[1:], C, symbols)
 
 
 
@@ -132,7 +130,10 @@ symbol | description      | C code
                 output_file.write('\n\n'.join(output_str))
 
 if __name__ == "__main__":
-    
+    import sys
     compiler = H2H('lang_spec.json')
-    
-    compiler.test()
+
+    if len(sys.argv) > 1 and sys.argv[1] == "--verbose":    
+        compiler.test(verbose = True)
+    else:
+        compiler.test()
