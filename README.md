@@ -6,5 +6,5 @@ Head to Head is a [Brainfuck-like](https://en.wikipedia.org/wiki/Brainfuck) prog
 
 Symbols for potential language extension:
 ```
-#$',\:_\`{}~
+#$',:_`{}~\
 ```
