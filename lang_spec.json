@@ -1,16 +1,16 @@
 {
     "version":"0.4.0",
-    "main-template":"#include <stdio.h>\nunsigned char a[30000] = {0};\nunsigned char *ptr[10]={a, a, a, a, a, a, a, a, a, a};\nint main(){\n$\n    return(0);\n}",
+    "main-template":"#include <stdio.h>\nunsigned char a[30000] = {0};\nint main(){\n$\n    return(0);\n}",
     "tokens":[
         {
             "s":"!",
             "d":"print",
-            "c":"putchar(*$);"
+            "c":"putchar($);"
         },
         {
             "s":"?",
             "d":"read",
-            "c":"*$=getchar();"
+            "c":"$=getchar();"
         },
         {
             "s":"[",
@@ -109,63 +109,58 @@
         },
         {
             "s":"@",
-            "d":"Value at head",
-            "c":"*$"
+            "d":"Value at address",
+            "c":"a[$]"
         },
         {
             "s":"0",
-            "d":"head 0",
-            "c":"ptr[0]"
+            "d":"literal 0",
+            "c":"0$"
         },
         {
             "s":"1",
-            "d":"head 1",
-            "c":"ptr[1]"
+            "d":"literal 1",
+            "c":"1$"
         },
         {
             "s":"2",
-            "d":"head 2",
-            "c":"ptr[2]"
+            "d":"literal 2",
+            "c":"2$"
         },
         {
             "s":"3",
-            "d":"head 3",
-            "c":"ptr[3]"
+            "d":"literal 3",
+            "c":"3$"
         },
         {
             "s":"4",
-            "d":"head 4",
-            "c":"ptr[4]"
+            "d":"literal 4",
+            "c":"4$"
         },
         {
             "s":"5",
-            "d":"head 5",
-            "c":"ptr[5]"
+            "d":"literal 5",
+            "c":"5$"
         },
         {
             "s":"6",
-            "d":"head 6",
-            "c":"ptr[6]"
+            "d":"literal 6",
+            "c":"6$"
         },
         {
             "s":"7",
-            "d":"head 7",
-            "c":"ptr[7]"
+            "d":"literal 7",
+            "c":"7$"
         },
         {
             "s":"8",
-            "d":"head 8",
-            "c":"ptr[8]"
+            "d":"literal 8",
+            "c":"8$"
         },
         {
             "s":"9",
-            "d":"head 9",
-            "c":"ptr[9]"
-        },
-        {
-            "s":".",
-            "d":"origin",
-            "c":"a"
+            "d":"literal 9",
+            "c":"9$"
         },
         {
             "s":"\n",

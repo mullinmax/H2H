@@ -48,7 +48,7 @@ symbol | description      | C code
                 C = C.replace('$', symbols[H2H_code[0]], 1)
             else:
                 C += symbols[H2H_code[0]]
-        return self.__H2H_to_C(H2H_code[1:], C, symbols)
+        return self.__H2H_to_C(H2H_code[1:], C, symbols).replace('$', '')
 
 
 
