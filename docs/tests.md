@@ -1,3 +1,7 @@
+tab:✔️✔️
+
+new-line:✔️✔️
+
 read-print:✔️✔️✔️
 
 increment:✔️✔️✔️
@@ -6,28 +10,26 @@ decrement:✔️✔️✔️
 
 set:✔️✔️
 
-bitwise-and:✔️
+constant:✔️✔️
 
-bitwise-or:✔️
+bitwise-and:✔️✔️
 
-bitwise-xor:✔️
+bitwise-or:✔️✔️
 
-bitwise-not:✔️
+bitwise-xor:✔️✔️
 
-left-shift:✔️
+bitwise-not:✔️✔️
 
-right-shift:✔️
+left-shift:✔️✔️
 
-multiply:✔️
+right-shift:✔️✔️
 
-divide:✔️
+multiply:✔️✔️
 
-add:✔️
+divide:✔️✔️
 
-subtract:✔️
+add:✔️✔️
 
-tab:✔️✔️
+subtract:✔️✔️
 
-new-line:✔️✔️
-
-TESTS COMPLETED IN 2.335744126699865 SECONDS
+TESTS COMPLETED IN 2.1415820866823196 SECONDS

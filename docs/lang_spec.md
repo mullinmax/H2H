@@ -2,8 +2,8 @@ version: *0.4.0*
 
 symbol | description      | C code
 -------|------------------|---------------------
- `!`   | print            | `putchar(*$);`      
- `?`   | read             | `*$=getchar();`     
+ `!`   | print            | `putchar($);`       
+ `?`   | read             | `$=getchar();`      
  `[`   | loop while > 0   | `while ($) {`       
  `]`   | end loop         | `}`                 
  `;`   | end expression   | `;`                 
@@ -23,18 +23,17 @@ symbol | description      | C code
  `-`   | subtract         | ` - $`              
  `>`   | increment        | `++$;`              
  `<`   | decrement        | `--$;`              
- `@`   | Value at head    | `*$`                
- `0`   | head 0           | `ptr[0]`            
- `1`   | head 1           | `ptr[1]`            
- `2`   | head 2           | `ptr[2]`            
- `3`   | head 3           | `ptr[3]`            
- `4`   | head 4           | `ptr[4]`            
- `5`   | head 5           | `ptr[5]`            
- `6`   | head 6           | `ptr[6]`            
- `7`   | head 7           | `ptr[7]`            
- `8`   | head 8           | `ptr[8]`            
- `9`   | head 9           | `ptr[9]`            
- `.`   | origin           | `a`                 
+ `@`   | Value at address | `a[$]`              
+ `0`   | literal 0        | `0$`                
+ `1`   | literal 1        | `1$`                
+ `2`   | literal 2        | `2$`                
+ `3`   | literal 3        | `3$`                
+ `4`   | literal 4        | `4$`                
+ `5`   | literal 5        | `5$`                
+ `6`   | literal 6        | `6$`                
+ `7`   | literal 7        | `7$`                
+ `8`   | literal 8        | `8$`                
+ `9`   | literal 9        | `9$`                
  `\n`  | new line         | `\n`                
  `\t`  | tab              | `\t`                
  ` `   | space            | ` `                 
