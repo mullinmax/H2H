@@ -32,4 +32,10 @@ add:✔️✔️
 
 subtract:✔️✔️
 
-TESTS COMPLETED IN 2.1415820866823196 SECONDS
+parens:✔️✔️
+
+looping:✔️✔️
+
+distant-address-access:✔️✔️
+
+TESTS COMPLETED IN 2.9467285284772515 SECONDS
